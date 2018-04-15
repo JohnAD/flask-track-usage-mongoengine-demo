@@ -1,0 +1,56 @@
+<html>
+    <body>
+        <p>
+            <h2>Url Traffic Analysis</h2>
+            <h2>for Page One</h2>
+            <i>admin page (traffic not tracked using '@t.exclude')</i>
+        </p>
+
+        <table border="1">
+            <tr>
+                <th colspan="4">
+                    LAST 24 HOURS
+                </th>
+            </tr>
+            <tr>
+                <th>
+                    Date
+                </th>
+                <th>
+                    URL
+                </th>
+                <th>
+                    Visits
+                </th>
+                <th>
+                    Transfer
+                </th>
+            </tr>
+            {% for entry in stats['hourly'] %}
+            <tr>
+                <td>
+                    {{entry.date}}
+                </td>
+                <td>
+                    {{entry.url}}
+                </td>
+                <td>
+                    {{entry.hits}}
+                </td>
+                <td>
+                    {{entry.transfer}}
+                </td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="4">
+                    <i>no stats yet</i>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+        <p>
+            <a href="/">Back to main</a>
+        </p>
+    </body>
+</html>

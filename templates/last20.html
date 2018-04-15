@@ -1,0 +1,67 @@
+<html>
+    <body>
+        <p>
+            <h2>Last 20 Visits</h2>
+            <i>admin page (traffic not tracked using '@t.exclude')</i>
+        </p>
+        <table border="1">
+            <tr>
+                <th>
+                    URL
+                </th>
+                <th>
+                    Date
+                </th>
+                <th>
+                    Length
+                </th>
+                <th>
+                    Speed (time)
+                </th>
+                <th>
+                    Remote IP
+                </th>
+                <th>
+                    Language
+                </th>
+                <th>
+                    Browser
+                </th>
+            </tr>
+            {% for entry in visits %}
+            <tr>
+                <td>
+                    {{entry.url}}
+                </td>
+                <td>
+                    {{entry.date}}
+                </td>
+                <td>
+                    {{entry.content_length}}
+                </td>
+                <td>
+                    {{entry.speed}}
+                </td>
+                <td>
+                    {{entry.remote_addr}}
+                </td>
+                <td>
+                    {{entry.user_agent.language or "none"}}
+                </td>
+                <td>
+                    {{entry.user_agent.browser}}
+                </td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="7">
+                    <i>no visits yet</i>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+        <p>
+            <a href="/">Back to main</a>
+        </p>
+    </body>
+</html>
