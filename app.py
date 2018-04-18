@@ -8,19 +8,22 @@ from flask import (
 import mongoengine as me
 from flask_track_usage import TrackUsage
 from flask_track_usage.storage.mongo import MongoEngineStorage
-from flask_track_usage.summarization import sumUrl
-from flask_track_usage.summarization.mongoenginestorage import UsageTrackerSumUrlHourly
-
+from flask_track_usage.summarization import sumUrl, sumUserAgent
 
 app = Flask(__name__)
+
+def datetimeformat(value, format='%Y-%m-%d %H:%M'):
+    return value.strftime(format)
+app.jinja_env.filters['datetime'] = datetimeformat
 
 me.connect("example_website")
 
 app.config['TRACK_USAGE_USE_FREEGEOIP'] = False
 app.config['TRACK_USAGE_INCLUDE_OR_EXCLUDE_VIEWS'] = 'exclude'
 
-traffic_storage = MongoEngineStorage(hooks=[sumUrl])
+traffic_storage = MongoEngineStorage(hooks=[sumUrl, sumUserAgent])
 t = TrackUsage(app, [traffic_storage])
+
 
 @app.route('/')
 def index():
@@ -43,6 +46,11 @@ def last_twenty():
 @t.exclude
 @app.route('/admin/last_url.html')
 def last_url():
-    stats = {}
-    stats['hourly'] = UsageTrackerSumUrlHourly.objects[:24]
+    stats = traffic_storage.get_sum(sumUrl, limit=30, target="http://127.0.0.1:5000/page1")
     return render_template('last_url.html', stats=stats)
+
+@t.exclude
+@app.route('/admin/last_useragent.html')
+def last_useragent():
+    stats = traffic_storage.get_sum(sumUserAgent, limit=40)
+    return render_template('last_useragent.html', stats=stats)

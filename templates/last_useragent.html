@@ -1,17 +1,14 @@
 <html>
     <body>
         <p>
-            <h2>Url Traffic Analysis</h2>
-            <h2>for Page One</h2>
-        </p>
-        <p>
-            <pre>http://127.0.0.1:5000/page1</pre>
+            <h2>UserAgent Traffic Analysis</h2>
+            (last 40 entries)
         </p>
 
         <table border="1">
             <tr>
                 <th colspan="4">
-                    LAST 24 HOURS
+                    RECENT USERAGENTS SEEN (HOURLY)
                 </th>
             </tr>
             <tr>
@@ -19,7 +16,7 @@
                     Hour
                 </th>
                 <th style="width: 10em">
-                    URL
+                    User Agent
                 </th>
                 <th style="width: 10em">
                     Visits
@@ -28,13 +25,13 @@
                     Transfer
                 </th>
             </tr>
-            {% for entry in stats['hour'][:24] %}
+            {% for entry in stats['hour'] %}
             <tr>
                 <td>
                     {{entry.date | datetime }}
                 </td>
                 <td>
-                    {{entry.url}}
+                    {{entry.user_agent_string}}
                 </td>
                 <td>
                     {{entry.hits}}
@@ -54,50 +51,7 @@
         <table border="1">
             <tr>
                 <th colspan="4">
-                    LAST 30 DAYS
-                </th>
-            </tr>
-            <tr>
-                <th style="width: 10em">
-                    Date
-                </th>
-                <th style="width: 10em">
-                    URL
-                </th>
-                <th style="width: 10em">
-                    Visits
-                </th>
-                <th style="width: 10em">
-                    Transfer
-                </th>
-            </tr>
-            {% for entry in stats['day'][:30] %}
-            <tr>
-                <td>
-                    {{entry.date | datetime(format='%Y-%m-%d')}}
-                </td>
-                <td>
-                    {{entry.url}}
-                </td>
-                <td>
-                    {{entry.hits}}
-                </td>
-                <td>
-                    {{entry.transfer}}
-                </td>
-            </tr>
-            {% else %}
-            <tr>
-                <td colspan="4">
-                    <i>no stats yet</i>
-                </td>
-            </tr>
-            {% endfor %}
-        </table>
-        <table border="1">
-            <tr>
-                <th colspan="4">
-                    LAST 12 MONTHS
+                    RECENT USERAGENTS SEEN (MONTHLY)
                 </th>
             </tr>
             <tr>
@@ -105,7 +59,7 @@
                     Month
                 </th>
                 <th style="width: 10em">
-                    URL
+                    User Agent
                 </th>
                 <th style="width: 10em">
                     Visits
@@ -114,13 +68,13 @@
                     Transfer
                 </th>
             </tr>
-            {% for entry in stats['month'][:12] %}
+            {% for entry in stats['month'] %}
             <tr>
                 <td>
                     {{entry.date | datetime(format='%Y-%m')}}
                 </td>
                 <td>
-                    {{entry.url}}
+                    {{entry.user_agent_string}}
                 </td>
                 <td>
                     {{entry.hits}}
