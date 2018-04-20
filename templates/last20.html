@@ -27,6 +27,9 @@
                 <th>
                     Browser
                 </th>
+                <th>
+                    "something"
+                </th>
             </tr>
             {% for entry in visits %}
             <tr>
@@ -50,6 +53,9 @@
                 </td>
                 <td>
                     {{entry.user_agent.browser}}
+                </td>
+                <td>
+                    {{entry.track_var.something}}
                 </td>
             </tr>
             {% else %}
